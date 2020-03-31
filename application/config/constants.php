@@ -83,3 +83,17 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+/*
+|--------------------------------------------------------------------------
+| Styling Dependencies Path
+|--------------------------------------------------------------------------
+*/
+defined('CSS_FONT_AWESOME')                 OR define('CSS_FONT_AWESOME', 'http://localhost:8080//assets/font-awesome/css/all.min.css');
+defined('CSS_ICHECK_BOOTSTRAP')             OR define('CSS_ICHECK_BOOTSTRAP', 'http://localhost:8080//assets/icheck-bootstrap/icheck-bootstrap.min.css');
+defined('CSS_ADMINLTE')                     OR define('CSS_ADMINLTE', 'http://localhost:8080//assets/adminlte/adminlte.min.css');
+defined('CSS_GOOGLE_FONT_SOURCE_SANS_PRO')  OR define('CSS_GOOGLE_FONT_SOURCE_SANS_PRO', 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700');
+
+defined('JS_JQUERY')    OR define('JS_JQUERY', 'http://localhost:8080//assets/jquery/jquery.min.js');
+defined('JS_BOOTSTRAP') OR define('JS_BOOTSTRAP', 'http://localhost:8080//assets/bootstrap/bootstrap.bundle.min.js');
+defined('JS_ADMINLTE')  OR define('JS_ADMINLTE', 'http://localhost:8080//assets/adminlte/adminlte.min.css');
