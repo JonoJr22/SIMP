@@ -83,3 +83,42 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+/*
+|--------------------------------------------------------------------------
+| Role Menus
+|--------------------------------------------------------------------------
+*/
+$home = array('Home', '');
+
+defined('ADMINISTRATOR_MENU')       OR define('ADMINISTRATOR_MENU', serialize(array(
+                                        $home, 
+                                        array('Pengguna', 'administrator/list_pengguna')
+                                    )));
+                        
+// defined('CUSTOMER_SERVICE_MENU')    OR define('CUSTOMER_SERVICE_MENU', serialize(array(
+//     $home,
+//     array('Order Barang', site_url('customer_service/list_order_barang'))
+// )));
+
+// defined('BAGIAN_GUDANG_MENU')       OR define('BAGIAN_GUDANG_MENU', serialize(array(
+//     $home,
+//     array('Order Barang', site_url('bagian_gudang/list_order_barang')),
+//     array('Bahan Baku', site_url('bagian_gudang/list_bahan_baku'))
+// )));
+
+// defined('BAGIAN_PRODUKSI_MENU')     OR define('BAGIAN_PRODUKSI_MENU' serialize(array(
+//     $home,
+//     array('Produksi', site_url('bagian_produksi/list_produksi'))
+// )));
+
+// defined('BAGIAN_PURCHASING_MENU')   OR define('BAGIAN_PURCHASING_MENU' serialize(array(
+//     $home,
+//     array('pembelian', site_url('bagian_purchasing/list_pembelian'))
+// )));
+
+// defined('MANAGER_DIRECTION_MENU')   OR define('MANAGER_DIRECTION_MENU', serialize(array(
+//     $home,
+//     array('Bahan Baku', site_url('manager_direction/list_bahan_baku')),
+//     array('Laporan', site_url('manager_direction/'))
+// )))

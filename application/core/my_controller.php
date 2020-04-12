@@ -35,4 +35,11 @@ class MY_Controller extends CI_Controller
         
         $this->load->view('template/core/full_content', $data);
     }
+
+    public function ubah_password()
+    {
+        $data['title'] = 'Ubah Password';
+
+        $this->render_core_page('global/ubah_password', $data);
+    }
 }

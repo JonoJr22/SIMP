@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-body login-card-body">
       <center><img src="<?php echo base_url('assets/image/logo2.jpg'); ?>" width="80%"/></center>
-      <h4 class="green-custom text-center">Sistem Informasi Monitoring Produksi</h4>
+      <h4 class="green-plus-custom text-center">Sistem Informasi Monitoring Produksi</h4>
       <hr>
       <p class="login-box-msg">Masuk untuk memulai sesi</p>
       <form action="<?php echo site_url('authentication/login'); ?>" method="post">
@@ -24,7 +24,7 @@
         </div>
         <div class="row mb-3">
           <div class="mx-auto col-4">
-            <button type="submit" class="btn btn-pink-custom btn-block text-center">Masuk</button>
+            <button type="submit" class="btn pink-plus-btn-custom btn-block text-center">Masuk</button>
           </div>
         </div>
       </form>
@@ -34,10 +34,10 @@
 
 <script type="text/javascript">
 <?php
-    $existFlashDataMessage = $this->session->flashdata('message');  
+    $existFlashDataAlertMessage = $this->session->flashdata('alert_message');  
 
-    if($existFlashDataMessage) {
-        echo 'toastr.error("'.$existFlashDataMessage.'")';
+    if($existFlashDataAlertMessage) {
+        echo 'toastr.error("'.$existFlashDataAlertMessage.'")';
     } 
 ?>
 </script>

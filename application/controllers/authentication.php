@@ -12,7 +12,6 @@ class Authentication extends MY_Controller
 
 	public function index()
 	{
-		$this->session->sess_destroy(); 
 		$existAuthSession = $this->session->userdata('authenticated');
 		$roleID = $this->session->userdata('role_id');
 
@@ -35,7 +34,7 @@ class Authentication extends MY_Controller
 
 		if(empty($pengguna))
 		{ 
-		  	$this->session->set_flashdata('message', 'Username tidak ditemukan'); 
+		  	$this->session->set_flashdata('alert_message', 'Username tidak ditemukan'); 
 			  
 			redirect('authentication'); 
 		}
@@ -51,6 +50,7 @@ class Authentication extends MY_Controller
 				);
 
 				$this->session->set_userdata($session); 
+				$this->session->set_flashdata('info_message', 'Selamat Datang');
 				
 				$redirectPath = $this->generate_redirect_path($pengguna->role_id);
 				
@@ -58,7 +58,7 @@ class Authentication extends MY_Controller
 			}
 			else
 			{
-				$this->session->set_flashdata('message', 'Password salah'); 
+				$this->session->set_flashdata('alert_message', 'Password salah'); 
 				
 				redirect('authentication'); 
 			}

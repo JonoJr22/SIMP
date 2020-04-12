@@ -23,28 +23,23 @@
             background-size: cover;
         }
 
-        .pink-custom {
-           color: #FF4F73;
+        .green-plus-custom {
+            color: #2FD67D;
         }
 
-        .btn-pink-custom {
-            background-color: #FF728E; 
-            color: #F3F3F5;
+        .pink-plus-btn-custom {
+            background-color: #F0727A; 
+            color: #F4F6F9;
         }
 
-        .btn-pink-custom:hover {
-            background-color: #FF4F73; 
-            color: #F3F3F5;
-        }
-        
-        .green-custom {
-            color: #16D1AE;
+        .pink-plus-btn-custom:hover {
+            background-color: #F0313E; 
+            color: #F4F6F9;
         }
 
         .login-box-custom {
             width: 450px; 
-            background-color: #F3F3F5; 
-            opacity: 0.9;
+            background-color: #F4F6F9; 
         }
     </style>
 

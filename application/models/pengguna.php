@@ -10,8 +10,18 @@ class Pengguna extends CI_Model
         $this->db->join('role', 'pengguna.role_id = role.id');
         $this->db->where('username', $username); 
 
-        $query = $this->db->get();
-        $result = $query->row();
+        $result = $this->db->get()->row();
+
+        return $result;
+    }
+
+    public function get_all()
+    {
+        $this->db->select('pengguna.id, nama, email, role');
+        $this->db->from('pengguna');
+        $this->db->join('role', 'pengguna.role_id = role.id');
+        
+        $result = $this->db->get()->result();
 
         return $result;
     }
