@@ -1,6 +1,15 @@
 <nav class="main-header navbar navbar-expand-md navbar-dark navbar-gray-dark">
   <div class="container">
-    <a href="<?php echo base_url(); ?>" class="navbar-brand">
+    <?php
+        if(isset($force))
+        {
+          echo '<a href="#" class="navbar-brand force-ubah-password">';
+        }
+        else
+        {
+          echo '<a href="'.base_url().'" class="navbar-brand">';
+        }
+    ?>
       <img src="<?php echo base_url('assets/image/logo4.png'); ?>" alt="SIMP Adorable Projects Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span style="margin-left:10px;" class="brand-text font-weight-light">SIMP</span>
     </a>
@@ -38,7 +47,16 @@
             foreach($arrMenu as $itemMenu)
             {
                 echo '<li class="nav-item">';
-                echo '<a href="'.site_url($itemMenu[1]).'" class="nav-link">'.$itemMenu[0].'</a>';
+
+                if(isset($force))
+                {
+                    echo '<a href="#" class="nav-link force-ubah-password">'.$itemMenu[0].'</a>';
+                }
+                else
+                {
+                    echo '<a href="'.site_url($itemMenu[1]).'" class="nav-link">'.$itemMenu[0].'</a>';
+                }
+                
                 echo '</li>';
             }
         ?>
@@ -49,9 +67,18 @@
       <li class="nav-item dropdown">
         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Akun</a>
         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-          <li><a href="<?php echo site_url('administrator/ubah_password'); ?>" class="dropdown-item">Ubah Password</a></li>
+          <?php
+              if(isset($force))
+              {
+                  echo '<li><a href="#" class="dropdown-item force-ubah-password">Ubah Password</a></li>';
+              }
+              else
+              {
+                  echo '<li><a href="'.site_url("administrator/ubah_password").'" class="dropdown-item">Ubah Password</a></li>';
+              }
+          ?>
           <li class="dropdown-divider"></li>
-          <li><a href="<?php echo site_url('authentication/logout'); ?>" class="dropdown-item">Keluar</a></li>
+          <li><a href="<?php echo site_url("authentication/logout"); ?>" class="dropdown-item logout">Keluar</a></li>
         </ul>
       </li>
     </ul>

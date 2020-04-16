@@ -10,7 +10,16 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>" class="green-plus2-custom">Home</a></li>
+            <?php
+                if(isset($force))
+                {
+                    echo '<li class="breadcrumb-item force-ubah-password"><a href="#" class="green-plus2-custom">Home</a></li>';
+                }
+                else
+                {
+                    echo '<li class="breadcrumb-item"><a href="'.base_url().'" class="green-plus2-custom">Home</a></li>';
+                }
+            ?>
             <li class="breadcrumb-item active">Ubah Password</li>
           </ol>
         </div>
@@ -30,8 +39,7 @@
             <form class="form-horizontal" action="<?php echo site_url('administrator/ubah_password_action'); ?>" method="post">
               <div class="card-body">
                 <div class="form-group row">
-                  <label for="inputEmail3" class="col-sm-3 col-form-label">Password Lama</label>
-                  <div class="col-sm-9 input-group">
+                  <div class="col-sm-12 input-group">
                     <input type="password" class="form-control" name="password_lama" placeholder="Password Lama" required>
                     <div class="input-group-append">
                       <div class="input-group-text">
@@ -41,9 +49,18 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="inputPassword3" class="col-sm-3 col-form-label">Password Baru</label>
-                  <div class="col-sm-9 input-group">
+                  <div class="col-sm-12 input-group">
                     <input type="password" class="form-control" name="password_baru" placeholder="Password Baru" required>
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-12 input-group">
+                    <input type="password" class="form-control" name="konfirmasi_password_baru" placeholder="Konfirmasi Password Baru" required>
                     <div class="input-group-append">
                       <div class="input-group-text">
                         <span class="fas fa-lock"></span>
@@ -53,7 +70,12 @@
                 </div>
               </div>
               <div class="card-footer pink-min-bg-custom">
-                <a class="btn bg-dark" href="<?php echo $cancelPath; ?>" role="button">Cancel</a>
+                <?php
+                    if(!isset($force))
+                    {
+                        echo '<a class="btn bg-dark" href="'.$cancelPath.'" role="button">Cancel</a>';
+                    }
+                ?>
                 <button type="submit" class="btn green-btn-custom float-right">Submit</button>
               </div>
             </form>

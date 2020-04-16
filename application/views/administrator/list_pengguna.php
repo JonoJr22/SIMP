@@ -22,7 +22,8 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-header bg-dark">
-              <h3 class="card-title">Tabel Pengguna</h3>
+              <h3 class="card-title" style="margin-top:5px;">Tabel Pengguna</h3>
+              <a class="btn btn-sm green-btn-custom float-right" href="<?php echo site_url('administrator/tambah_pengguna') ?>" role="button">Tambah</a>
             </div>
               <div class="card-body">
               <table id="pengguna" class="table table-bordered table-hover">
@@ -30,7 +31,6 @@
                 <tr>
                   <th><center>No.</center></th>
                   <th><center>Nama</center></th>
-                  <th><center>Email</center></th>
                   <th><center>Role</center></th>
                   <th><center>Aksi</center></th>
                 </tr>
@@ -44,7 +44,6 @@
                         echo '<tr>';
                         echo '<td><center>'.$no.'</center></td>';
                         echo '<td>'.$itemPengguna->nama.'</td>';
-                        echo '<td>'.$itemPengguna->email.'</td>';
                         echo '<td>'.ucwords(strtolower($itemPengguna->role)).'</td>';
 
                         echo '<td>';
@@ -70,7 +69,7 @@
 <script>
     $("#pengguna").DataTable({
         'columnDefs': [{
-            'targets': 4, 
+            'targets': 3, 
             'orderable': false, 
         }],
         "language": {

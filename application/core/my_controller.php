@@ -6,6 +6,7 @@ class MY_Controller extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+
         $this->authentication_check(); 
     }
 
@@ -34,12 +35,5 @@ class MY_Controller extends CI_Controller
         $data['main_content'] = $this->load->view($view, $data, TRUE);
         
         $this->load->view('template/core/full_content', $data);
-    }
-
-    public function ubah_password()
-    {
-        $data['title'] = 'Ubah Password';
-
-        $this->render_core_page('global/ubah_password', $data);
     }
 }

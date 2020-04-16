@@ -38,41 +38,45 @@ class Authentication extends MY_Controller
 			  
 			redirect('authentication'); 
 		}
-		else
-		{
-			if($passwordEncrypt == $pengguna->password)
-			{ 
-				$session = array(
-					'authenticated'	=> true, 
-					'username'		=> $pengguna->username,  
-					'role'			=> $pengguna->role,
-					'role_id'		=> $pengguna->role_id 
-				);
-
-				$this->session->set_userdata($session); 
-				$this->session->set_flashdata('info_message', 'Selamat Datang');
-				
-				$redirectPath = $this->generate_redirect_path($pengguna->role_id);
-				
-				redirect($redirectPath);
-			}
-			else
-			{
-				$this->session->set_flashdata('alert_message', 'Password salah'); 
-				
-				redirect('authentication'); 
-			}
+		
+		if($passwordEncrypt != $pengguna->password)
+		{ 
+			$this->session->set_flashdata('alert_message', 'Password salah'); 
+		
+			redirect('authentication');
 		}
+
+		$session = array(
+			'authenticated'	=> true, 
+			'username'		=> $pengguna->username,  
+			'role'			=> $pengguna->role,
+			'role_id'		=> $pengguna->role_id 
+		);
+
+		$this->session->set_userdata($session); 
+
+		if($pengguna->status_akun == '1')
+		{
+			$redirectPath = $this->generate_redirect_path($pengguna->role_id, '1');
+			$this->session->set_flashdata('info_message', 'Selamat Datang<br>Demi keamanan, silahkan ubah password akun anda');
+		}
+		else 
+		{
+			$redirectPath = $this->generate_redirect_path($pengguna->role_id);
+			$this->session->set_flashdata('info_message', 'Selamat Datang');	
+		}
+		
+		redirect($redirectPath);
 	}
 
 	public function logout()
 	{
 		$this->session->sess_destroy(); 
-		
+
 		redirect('authentication');
 	}
 
-	private function generate_redirect_path($roleID)
+	private function generate_redirect_path($roleID, $forceUbahPassword = '')
 	{
 		if($roleID == '1')
 		{
@@ -99,7 +103,7 @@ class Authentication extends MY_Controller
 			$redirectPath = 'manager_direction';
 		}
 
-		$redirectPath .= '\home';
+		$redirectPath .= ($forceUbahPassword != '') ? '\ubah_password\1' : '\home';
 		
 		return $redirectPath;
 	}

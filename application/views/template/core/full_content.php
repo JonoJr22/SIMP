@@ -105,9 +105,56 @@
     <?php echo $main_content; ?>
 
     <footer class="main-footer bg-pink-custom">
-        <strong>Copyright &copy; 2020 <a href="<?php echo base_url(); ?>" class="white-custom anchor-custom">SIMP - Adorable Projects</a>.</strong> All rights reserved.
+        <?php
+            if(isset($force))
+            {
+                echo '<strong>Copyright &copy; 2020 <a href="#" class="white-custom anchor-custom force-ubah-password">SIMP - Adorable Projects</a>.</strong> All rights reserved.';
+            }
+            else
+            {
+                echo '<strong>Copyright &copy; 2020 <a href="'.base_url().'" class="white-custom anchor-custom">SIMP - Adorable Projects</a>.</strong> All rights reserved.';
+            }
+        ?>
     </footer>
 </div>
+<script type="text/javascript">
+    toastr.options = {
+        "positionClass": "toast-bottom-right"
+    }     
 
+    <?php
+        $existFlashDataInfoMessage = $this->session->flashdata('info_message');  
+        if($existFlashDataInfoMessage) {
+            echo 'toastr.info("'.$existFlashDataInfoMessage.'")';
+        } 
+
+        $existFlashDataAlertMessage = $this->session->flashdata('alert_message');  
+        if($existFlashDataAlertMessage) {
+            echo 'toastr.error("'.$existFlashDataAlertMessage.'")';
+        } 
+
+        $existFlashDataSuccessMessage = $this->session->flashdata('success_message');  
+        if($existFlashDataSuccessMessage) {
+            echo 'toastr.success("'.$existFlashDataSuccessMessage.'")';
+        } 
+
+        $existFlashDataSuccessClosableMessage = $this->session->flashdata('success_closable_message');  
+        if($existFlashDataSuccessClosableMessage) {
+            echo '
+                $(document).Toasts("create", {
+                    body: "'.$existFlashDataSuccessClosableMessage.'",
+                    title: "Success",
+                    icon: "fas fa-shield-check fa-lg",
+                    class: "bg-success",
+                    position: "bottomRight",
+                })
+            ';
+        } 
+    ?>
+
+    $('.force-ubah-password').click(function() {
+        toastr.warning('Mohon untuk mengubah password anda terlebih dahulu')
+    });
+</script>
 </body>
 </html>
