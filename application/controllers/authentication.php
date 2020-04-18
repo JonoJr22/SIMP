@@ -27,8 +27,8 @@ class Authentication extends MY_Controller
 
 	public function login()
 	{
-		$username = $this->input->post('username'); 
-		$passwordEncrypt = md5($this->input->post('password')); 
+		$username = trim($this->input->post('username')); 
+		$passwordEncrypt = md5(trim($this->input->post('password'))); 
 
 		$pengguna = $this->pengguna->get($username); 
 

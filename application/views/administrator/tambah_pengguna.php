@@ -30,25 +30,25 @@
                 <div class="form-group row">
                   <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                   <div class="col-sm-4 input-group">
-                    <input type="text" class="form-control" name="nama_depan" placeholder="Nama Depan" required>
+                    <input type="text" class="form-control" name="nama_depan" placeholder="Nama Depan" required pattern="^\S+$" title="Tidak boleh ada spasi">
                   </div>
                   <div class="col-sm-3 input-group">
-                    <input type="text" class="form-control" name="nama_tengah" placeholder="Nama Tengah">
+                    <input type="text" class="form-control" name="nama_tengah" placeholder="Nama Tengah" pattern="^\S+$" title="Tidak boleh ada spasi">
                   </div>
                   <div class="col-sm-3 input-group">
-                    <input type="text" class="form-control" name="nama_belakang" placeholder="Nama Belakang">
+                    <input type="text" class="form-control" name="nama_belakang" placeholder="Nama Belakang" pattern="^\S+$" title="Tidak boleh ada spasi">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="nama_ayah_kandung" class="col-sm-2 col-form-label">Nama Ayah</label>
                   <div class="col-sm-4 input-group">
-                    <input type="text" class="form-control" name="nama_ayah_depan" placeholder="Nama Depan" required>
+                    <input type="text" class="form-control" name="nama_ayah_depan" placeholder="Nama Depan" required pattern="^\S+$" title="Tidak boleh ada spasi">
                   </div>
                   <div class="col-sm-3 input-group">
-                    <input type="text" class="form-control" name="nama_ayah_tengah" placeholder="Nama Tengah">
+                    <input type="text" class="form-control" name="nama_ayah_tengah" placeholder="Nama Tengah" pattern="^\S+$" title="Tidak boleh ada spasi">
                   </div>
                   <div class="col-sm-3 input-group">
-                    <input type="text" class="form-control" name="nama_ayah_belakang" placeholder="Nama Belakang">
+                    <input type="text" class="form-control" name="nama_ayah_belakang" placeholder="Nama Belakang" pattern="^\S+$" title="Tidak boleh ada spasi">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -86,5 +86,20 @@
     </div>
   </div>
 </div>
-<?php
-?>
+
+<script type="text/javascript">
+    <?php
+    $existFlashDataSuccessClosableMessage = $this->session->flashdata('success_closable_message');  
+    if($existFlashDataSuccessClosableMessage) {
+        echo '
+            $(document).Toasts("create", {
+                body: "'.$existFlashDataSuccessClosableMessage.'",
+                title: "Success",
+                icon: "fas fa-shield-check fa-lg",
+                class: "bg-success",
+                position: "bottomRight",
+            })
+        ';
+    }
+    ?>
+</script>

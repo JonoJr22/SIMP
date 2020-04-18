@@ -1,5 +1,13 @@
 <?php
-    $cancelPath = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '#';
+    if(isset($_SERVER['HTTP_REFERER']))
+        $arrUri = explode("/", $_SERVER['HTTP_REFERER']);
+
+    $cancelPath = (isset($_SERVER['HTTP_REFERER'])) ? ((isset($arrUri[4]) ? $arrUri[4] : '') != $this->uri->segment(2)) ? $_SERVER['HTTP_REFERER'] : '#' : '#';
+
+    $arrPassValidator = array(
+      'regex'   => '(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+-]).{8,12}', 
+      'message' => 'Setidaknya satu nomor, satu huruf besar, satu huruf kecil, dan salah satu dari (!, @, #, $, %, ^, &, *, _, =, +, -) serta panjang 8 - 12 karakter'
+    );
 ?>
 <div class="content-wrapper">
   <div class="content-header">
@@ -50,7 +58,7 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-12 input-group">
-                    <input type="password" class="form-control" name="password_baru" placeholder="Password Baru" required>
+                    <input type="password" class="form-control" name="password_baru" placeholder="Password Baru" required pattern="<?php echo $arrPassValidator['regex']; ?>" title="<?php echo $arrPassValidator['message']; ?>">
                     <div class="input-group-append">
                       <div class="input-group-text">
                         <span class="fas fa-lock"></span>
@@ -85,3 +93,9 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+    $('.force-ubah-password').click(function() {
+        toastr.warning('Mohon untuk mengubah password anda terlebih dahulu')
+    });
+</script>

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/font-awesome/css/all.min.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/pace-progress/themes/silver/pace-theme-flash.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/toastr/toastr.min.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/sweet-alert/sweetalert.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/datatables-bs4/dataTables.bootstrap4.min.css'); ?>">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700">
 
@@ -95,6 +96,7 @@
     <script src="<?php echo base_url('assets/toastr/toastr.min.js'); ?>"></script>
     <script src="<?php echo base_url('assets/datatables/jquery.dataTables.min.js'); ?>"></script>
     <script src="<?php echo base_url('assets/datatables-bs4/dataTables.bootstrap4.min.js'); ?>"></script>
+    <script src="<?php echo base_url('assets/sweet-alert/sweetalert.js'); ?>"></script>
     <script src="<?php echo base_url('assets/adminlte/adminlte.min.js'); ?>"></script>
 </head>
 <body class="hold-transition layout-top-nav layout-navbar-fixed">
@@ -136,25 +138,8 @@
         $existFlashDataSuccessMessage = $this->session->flashdata('success_message');  
         if($existFlashDataSuccessMessage) {
             echo 'toastr.success("'.$existFlashDataSuccessMessage.'")';
-        } 
-
-        $existFlashDataSuccessClosableMessage = $this->session->flashdata('success_closable_message');  
-        if($existFlashDataSuccessClosableMessage) {
-            echo '
-                $(document).Toasts("create", {
-                    body: "'.$existFlashDataSuccessClosableMessage.'",
-                    title: "Success",
-                    icon: "fas fa-shield-check fa-lg",
-                    class: "bg-success",
-                    position: "bottomRight",
-                })
-            ';
-        } 
+        }  
     ?>
-
-    $('.force-ubah-password').click(function() {
-        toastr.warning('Mohon untuk mengubah password anda terlebih dahulu')
-    });
 </script>
 </body>
 </html>

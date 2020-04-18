@@ -18,14 +18,6 @@ class Administrator extends MY_Controller
         $this->render_core_page('administrator/home', $data);
     }
 
-    public function list_pengguna()
-    {
-        $data['pengguna'] = $this->pengguna->get_all();
-        $data['title'] = 'List Pengguna';
-
-        $this->render_core_page('administrator/list_pengguna', $data);
-    }
-
     public function ubah_password($force = '')
     {
         $data['title'] = 'Ubah Password';
@@ -38,9 +30,9 @@ class Administrator extends MY_Controller
 
     public function ubah_password_action()
     {
-        $passwordLama = md5($this->input->post('password_lama'));
-        $passwordBaru = md5($this->input->post('password_baru'));
-        $konfirmasiPasswordBaru = md5($this->input->post('konfirmasi_password_baru'));
+        $passwordLama = md5(trim($this->input->post('password_lama')));
+        $passwordBaru = md5(trim($this->input->post('password_baru')));
+        $konfirmasiPasswordBaru = md5(trim($this->input->post('konfirmasi_password_baru')));
         $username = $this->session->userdata('username');
 
         $pengguna = $this->pengguna->get_password($username);
@@ -64,11 +56,23 @@ class Administrator extends MY_Controller
             'status_akun'   => 0
         ];
 
-        $editSuccess = $this->pengguna->update($username, $dataUpdate);
+        $this->pengguna->update($username, $dataUpdate);
 
         $this->session->set_flashdata('success_message', 'Password berhasil diubah');
         
         redirect('administrator/ubah_password');
+    }
+
+    public function list_pengguna()
+    {
+        $dataReq = array(
+            'username !='   => $this->session->userdata('username')
+        );
+
+        $data['pengguna'] = $this->pengguna->get_all_exclude($dataReq);
+        $data['title'] = 'List Pengguna';
+
+        $this->render_core_page('administrator/list_pengguna', $data);
     }
 
     public function tambah_pengguna()
@@ -104,24 +108,42 @@ class Administrator extends MY_Controller
         $namaLengkap = ucwords($namaLengkap);
         $username = strtolower($namaDepan);
 
-        if(str_word_count($namaLengkap) != 1) 
+        $arrCheckLastUsernamePart = [];
+        
+        if($namaBelakang != '')
+            array_push($arrCheckLastUsernamePart, $namaBelakang);
+
+        if($namaTengah != '')
+            array_push($arrCheckLastUsernamePart, $namaTengah);
+
+        array_push($arrCheckLastUsernamePart, $namaAyahDepan);
+        
+        $valid = FALSE;
+        $seq = 1;
+        while(!$valid)
         {
-            if($namaBelakang != '')
+            $countCheckLastUsernamePart = count($arrCheckLastUsernamePart);
+            if($countCheckLastUsernamePart != 0)
             {
-                $username .= '.'.strtolower($namaBelakang);
-                $password = $namaBelakang;
+                $checkUsername = $username.'.'.strtolower($arrCheckLastUsernamePart[0]);
+                array_shift($arrCheckLastUsernamePart);
             }
-            else
+            else 
             {
-                $username .= '.'.strtolower($namaTengah);
-                $password = $namaTengah;
+                $checkUsername = $username.'.'.strtolower($namaAyahDepan).'.'.str_pad($seq, 2, '0', STR_PAD_LEFT);
+                $seq++;
             }
+            
+            $pengguna = $this->pengguna->get($checkUsername);
+
+            if($pengguna == null)
+            {
+                $valid = TRUE;
+                $username = $checkUsername;
+            } 
         }
-        else
-        {
-            $username .= '.'.strtolower($namaAyahDepan);
-            $password = $namaAyahDepan;
-        }
+
+        $password = (str_word_count($namaLengkap) != 1) ? ($namaBelakang != '') ? $namaBelakang : $namaTengah : $namaAyahDepan;
 
         $statusAkun = 1;
 
@@ -129,16 +151,49 @@ class Administrator extends MY_Controller
             'nama'          => $namaLengkap,
             'username'      => $username,
             'password'      => md5($password),
-            'status_akun'  => $statusAkun,
+            'status_akun'   => $statusAkun,
             'role_id'       => $role
         );
 
-        $this->pengguna->tambah_data($dataTambah);
+        $this->pengguna->tambah($dataTambah);
 
         $this->session->set_flashdata('success_closable_message', 
             'Silahkan informasikan kepada pengguna untuk segera mengganti password di SIMP <br><br> Username : '.$username.'<br> Password : '.$password
         );
 
         redirect('administrator/tambah_pengguna');    
+    }
+
+    public function ubah_pengguna($username)
+    {
+        $data['title'] = 'Ubah Pengguna';
+        $data['pengguna'] = $this->pengguna->get($username);
+        $data['role'] = $this->role->get_all();
+
+        $this->render_core_page('administrator/ubah_pengguna', $data);
+    }
+
+    public function ubah_pengguna_action()
+    {
+        $penggunaUpdate = unserialize(base64_decode($this->input->post('pengguna')));
+        $username = $penggunaUpdate[0];
+        
+        $dataUpdate = array(
+            'role_id'   => $penggunaUpdate[1]
+        );
+
+        var_dump($username);
+        var_dump($dataUpdate);
+
+        $this->pengguna->update($username, $dataUpdate);
+
+        $this->session->set_flashdata('success_message', 'Pengguna berhasil diubah');
+
+        redirect('administrator/list_pengguna');
+    }
+
+    public function hapus_pengguna_action($id)
+    {
+        $this->pengguna->hapus($id);
     }
 }

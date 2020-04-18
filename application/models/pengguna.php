@@ -5,7 +5,7 @@ class Pengguna extends CI_Model
 {
     public function get($username)
     {
-        $this->db->select('username, password, status_akun, role, role_id');
+        $this->db->select('nama, username, password, status_akun, role, role_id');
         $this->db->from('pengguna');
         $this->db->join('role', 'pengguna.role_id = role.id');
         $this->db->where('username', $username); 
@@ -15,10 +15,11 @@ class Pengguna extends CI_Model
         return $result;
     }
 
-    public function get_all()
+    public function get_all_exclude($dataReq)
     {
-        $this->db->select('pengguna.id, nama, role');
+        $this->db->select('pengguna.id, nama, username, role');
         $this->db->from('pengguna');
+        $this->db->where($dataReq);
         $this->db->join('role', 'pengguna.role_id = role.id');
         
         $result = $this->db->get()->result();
@@ -43,8 +44,14 @@ class Pengguna extends CI_Model
         $this->db->update('pengguna', $dataUpdate);
     }
 
-    public function tambah_data($dataTambah)
+    public function tambah($dataTambah)
     {
         $this->db->insert('pengguna', $dataTambah);
+    }
+
+    public function hapus($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('pengguna');
     }
 }

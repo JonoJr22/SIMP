@@ -41,7 +41,7 @@
                     
                     foreach($pengguna as $itemPengguna)
                     {
-                        echo '<tr>';
+                        echo '<tr id='.$itemPengguna->id.'>';
                         echo '<td><center>'.$no.'</center></td>';
                         echo '<td>'.$itemPengguna->nama.'</td>';
                         echo '<td>'.ucwords(strtolower($itemPengguna->role)).'</td>';
@@ -49,8 +49,8 @@
                         echo '<td>';
                         echo '<center>';
                         echo '<div class="btn-group">';
-                        echo '<button type="button" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>';
-                        echo '<button type="button" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>';
+                        echo '<a class="btn btn-sm btn-warning" href="'.site_url('administrator/ubah_pengguna/'.$itemPengguna->username).'" role="button"><i class="fas fa-edit"></i></a>';
+                        echo '<a class="btn btn-sm btn-danger hapus" data-id="'.$itemPengguna->id.'" role="button"><i class="fas fa-trash-alt"></i></a>';
                         echo '</div>';
                         echo '</center>';
                         echo '</td>';
@@ -66,7 +66,7 @@
   </div>
 </div>
 
-<script>
+<script type="text/javascript">
     $("#pengguna").DataTable({
         'columnDefs': [{
             'targets': 3, 
@@ -89,5 +89,57 @@
                 "previous"  : "Sebelumnya"
             }
         }
+    });
+
+    $('.hapus').click(function(){
+        var id = $(this).attr("data-id");
+
+        swal({
+            title: "Apa anda yakin?",
+            text: "Setelah dihapus, data ini tidak bisa dikembalikan.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Ya, hapus",
+            cancelButtonClass: "bg-dark",
+            cancelButtonText: "Tidak",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: '<?php echo site_url('administrator/hapus_pengguna_action/'); ?>'+ id,
+                    type: 'DELETE',
+                    error: function() {
+                        alert('Terjadi kesalahan');
+                    },
+                    success: function(data) {
+                        swal({
+                            title: "Terhapus!",
+                            text: "Data pengguna ini telah terhapus",
+                            type: "success",
+                            confirmButtonClass: "bg-dark",
+                            confirmButtonText: "Oke, sip"
+                        },
+                        function(isConfirm) {
+                            if(isConfirm) {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                });
+            } 
+            else 
+            {
+                swal({
+                    title: "Dibatalkan",
+                    text: "Data pengguna ini sudah aman",
+                    type: "error",
+                    confirmButtonClass: "bg-dark",
+                    confirmButtonText: "Oke, sip"
+                });
+            }
+        });
     });
 </script>
